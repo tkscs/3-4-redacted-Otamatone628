@@ -1,8 +1,31 @@
+import string
+
+punctuation = string.punctuation
+
+def check_punctuation(word) :
+    for character in punctuation :
+        if word[len(word)-1:] == character :
+            global is_punctuation
+            is_punctuation = True
+            return character
+        else :
+            is_punctuation = False
+
 def redact(original_string):
     new_string = ""
     for word in original_string.split(" "):
-        # YOUR CODE HERE
+        if word.istitle() == True :
+            check_punctuation(word)
+            global is_punctuation
+            if is_punctuation == True :
+                new_string += "REDACTED" + check_punctuation(word)
+            else :
+                new_string += "REDACTED"
+        else:
+            new_string += word
+        new_string += " "
     return new_string
+
 
 eb_bio = "Erin came to Kehillah after getting her PhD in Cognitive Science \
 from Stanford University, where she worked on projects in Natural Language \
@@ -40,6 +63,8 @@ as a result has developed a keen interest in mental health in young people, as \
 well as enabling students to pursue Higher Education. In her spare time, Zoe is \
 enjoying exploring California with her partner and their dog and enjoys good food, \
 exercise, and women's soccer."
+
+
 print(redact(eb_bio))
 print(redact(kuszmaul_bio))
 print(redact(dsouza_bio))
